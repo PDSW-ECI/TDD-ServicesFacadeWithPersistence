@@ -35,28 +35,38 @@ public class MyBatisDaoFactory extends DaoFactory {
 
     private static volatile SqlSessionFactory sessionFactory;
     
-    private Properties appProperties=null;
-    
     private SqlSession currentSession=null;
     
-    public MyBatisDaoFactory(Properties appProperties) {
-        this.appProperties=appProperties;
+    /**
+     * Constructor de la fábrica de DAOs de MyBATIS. La construcción
+     * de la fábrica de sesiones se hace de forma sincronizada para
+     * garantizar que si múltiples hilos crean DAOs concurrentemente,
+     * no se podrá crear más de un 'sessionFactory'.
+     * @param appProperties 
+     */
+    public MyBatisDaoFactory(Properties appProperties) {        
         if (sessionFactory==null){
             synchronized(MyBatisDaoFactory.class){
                 if (sessionFactory==null){
-                    sessionFactory=getSqlSessionFactory(); 
+                    sessionFactory=getSqlSessionFactory(appProperties); 
                 }
             }
            
         }
     }
     
-    public static SqlSessionFactory getSqlSessionFactory() {
+    /**
+     * Construye un SQLSessionFactory usando el archivo de configuración de
+     * MyBatis cuyo nombre está en el archivo de configuración de la aplicación.
+     * @param appProperties
+     * @return una nueva SQLSessionFactory
+     */
+    private SqlSessionFactory getSqlSessionFactory(Properties appProperties) {
         SqlSessionFactory sqlSessionFactory = null;
         if (sqlSessionFactory == null) {
             InputStream inputStream;
             try {
-                inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+                inputStream = Resources.getResourceAsStream(appProperties.getProperty("mybatis-config-file"));
                 sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -30,18 +30,25 @@ import java.util.Properties;
  */
 public class JDBCDaoFactory extends DaoFactory {
     
+    //La variable 'connectionInstance' garantiza tener una conexión diferente
+    //por cada hilo de ejecución de la aplicación.
     private static final ThreadLocal<Connection> connectionInstance = new ThreadLocal<Connection>() {
     };
 
-    private static Properties appProperties=null;
+    private Properties appProperties=null;
     
     public JDBCDaoFactory(Properties appProperties) {
         this.appProperties=appProperties;
     }
     
     
-    
-    private static Connection openConnection() throws PersistenceException{
+    /**
+     * Construye una nueva conexión a partir de los parámetros dados en
+     * el archivo de configuración.
+     * @return
+     * @throws PersistenceException 
+     */
+    private Connection openConnection() throws PersistenceException{
             String url=appProperties.getProperty("url");
             String driver=appProperties.getProperty("driver");
             String user=appProperties.getProperty("user");
