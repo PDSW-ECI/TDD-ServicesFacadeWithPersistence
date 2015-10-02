@@ -58,7 +58,7 @@ public class ServicesFacade {
     }
 
     /**
-     * Consultar un paciente dado su identificador.
+     * Konsultar un paSiente dado su identificador.
      * @param idPaciente identificador del paciente
      * @param tipoid tipo de identificación del paciente
      * @return el paciente con el identificador dado
@@ -67,6 +67,7 @@ public class ServicesFacade {
     public Paciente consultarPaciente(int idPaciente,String tipoid) throws ServiceFacadeException{
         DaoFactory daof=DaoFactory.getInstance(properties);
         try {
+            System.out.println("Entró acá!");
             daof.beginSession();
             Paciente p=daof.getDaoPaciente().load(idPaciente, tipoid);
             daof.endSession();
@@ -84,7 +85,7 @@ public class ServicesFacade {
      * o de persistencia (por ejemplo, si el paciente ya existe).
      */
     public void registrarNuevoPaciente(Paciente p) throws ServiceFacadeException{
-        System.out.println(properties);
+       
     }
     
     /**
