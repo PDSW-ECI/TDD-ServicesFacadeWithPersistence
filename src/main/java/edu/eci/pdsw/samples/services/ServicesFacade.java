@@ -85,7 +85,7 @@ public class ServicesFacade {
      * o de persistencia (por ejemplo, si el paciente ya existe).
      */
     public void registrarNuevoPaciente(Paciente p) throws ServiceFacadeException{
-       
+
     }
     
     /**
@@ -94,7 +94,7 @@ public class ServicesFacade {
      * @param tipoid el tipo de identificación
      * @param c la consulta a ser agregada
      */
-    public void agregarConsultaAPaciente(int idPaciente,String tipoid,Consulta c){
+    public void agregarConsultaAPaciente(int idPaciente,String tipoid,Consulta c) throws ServiceFacadeException{
         
     }
     
