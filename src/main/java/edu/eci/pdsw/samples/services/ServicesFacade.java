@@ -42,7 +42,7 @@ public class ServicesFacade {
     
     private ServicesFacade(String propFileName) throws IOException{        
 	InputStream input = null;
-        input = ClassLoader.getSystemResourceAsStream(propFileName);
+	input = this.getClass().getClassLoader().getResourceAsStream(propFileName);
         properties.load(input);
     }
     
